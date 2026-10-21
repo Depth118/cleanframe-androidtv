@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.cleanframe.androidtv'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.cleanframe.androidtv'
+        minSdk 21
+        targetSdk 35
+        // CI passes these from the release tag; local builds use the defaults.
+        versionCode((project.findProperty('versionCode') ?: '1') as int)
+        versionName(project.findProperty('versionName') ?: '0.1.0-dev')
+    }
+
+    // Release signing comes from environment variables (see README). Without them, release
+    // builds use the debug key, which is fine for sideloading on your own TV.
+    def keystore = System.getenv('CLEANFRAME_KEYSTORE')
+    signingConfigs {
+        if (keystore) {
+            release {
+                storeFile file(keystore)
+                storePassword System.getenv('CLEANFRAME_KEYSTORE_PASSWORD')
+                keyAlias System.getenv('CLEANFRAME_KEY_ALIAS')
+                keyPassword System.getenv('CLEANFRAME_KEY_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig keystore ? signingConfigs.release : signingConfigs.debug
+        }
+    }
+
+    buildFeatures { buildConfig true }
+
+    // Wallpapers are already JPEG; don't spend time recompressing.
+    androidResources { noCompress += ['jpg', 'png', 'woff2', 'ttf'] }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}

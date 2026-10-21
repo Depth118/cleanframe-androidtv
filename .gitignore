@@ -1,0 +1,15 @@
+# Generated from upstream CleanFrame by scripts/sync-ui.sh
+android/app/src/main/assets/home/
+
+# Build output and local SDK paths
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+dist/
+
+# Personal device notes, backups and signing keys
+.local/
+*.jks
+*.keystore
+.DS_Store
