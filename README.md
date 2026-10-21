@@ -33,8 +33,6 @@ The agent needs to run on your own computer (Claude Code, for example) so it can
 - Works with the remote: D-pad, OK and Back.
 - Can be set as the default Home, so the Home button and power-on go straight to CleanFrame.
 
-![All apps](docs/all-apps.jpg)
-
 ## Do it yourself
 
 ### 1. Build
